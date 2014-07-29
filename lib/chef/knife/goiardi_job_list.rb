@@ -17,17 +17,17 @@
 
 class Chef
   class Knife
-    class JobStatus < Chef::Knife
-      banner "knife job status <job id>"
+    class GoiardiJobList < Chef::Knife
+      banner "knife goiardi job list"
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
-        job_id = name_args[0]
-        job = rest.get_rest("pushy/jobs/#{job_id}")
-        output(job)
+        jobs = rest.get_rest("shovey/jobs")
+        output(jobs)
       end
     end
   end
 end
+
 

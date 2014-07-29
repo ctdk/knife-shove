@@ -1,13 +1,13 @@
 $:.unshift(File.dirname(__FILE__) + '/lib')
-require 'knife-push/version'
+require 'knife-shove/version'
 
 Gem::Specification.new do |s|
-  s.name = "knife-push"
-  s.version = Knife::Push::VERSION
+  s.name = "knife-shove"
+  s.version = Knife::Shove::VERSION
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.summary = "Knife plugin for OPC push"
+  s.summary = "Knife plugin for goiardi shovey"
   s.description = s.summary
   s.author = "John Keiser"
   s.email = "jkeiser@opscode.com"

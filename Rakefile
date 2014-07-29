@@ -12,11 +12,11 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
 end
 
-gem_spec = eval(File.read("knife-push.gemspec"))
+gem_spec = eval(File.read("knife-shove.gemspec"))
 
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "knife-push #{gem_spec.version}"
+  rdoc.title = "knife-shove #{gem_spec.version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

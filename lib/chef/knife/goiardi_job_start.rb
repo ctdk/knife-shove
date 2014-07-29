@@ -17,7 +17,7 @@
 
 class Chef
   class Knife
-    class JobStart < Chef::Knife
+    class GoiardiJobStart < Chef::Knife
 
       deps do
         require 'chef/rest'
@@ -25,7 +25,7 @@ class Chef
         require 'chef/search/query'
       end
 
-      banner "knife job start <command> [<node> <node> ...]"
+      banner "knife goiardi job start <command> [<node> <node> ...]"
 
       option :run_timeout,
         :long => '--timeout TIMEOUT',
@@ -35,7 +35,7 @@ class Chef
             :short => '-q QUORUM',
             :long => '--quorum QUORUM',
             :default => '100%',
-            :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
+            :description => 'Shovey job quorum. Percentage (-q 50%) or Count (-q 145).'
 
       option :search,
             :short => '-s QUERY',
@@ -82,7 +82,7 @@ class Chef
           'quorum' => get_quorum(config[:quorum], @node_names.length)
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
-        result = rest.post_rest('pushy/jobs', job_json)
+        result = rest.post_rest('shovey/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-32,32]}"
         previous_state = "Initialized."

@@ -17,8 +17,8 @@
 
 class Chef
   class Knife
-    class NodeStatus < Chef::Knife
-      banner "knife node status [<node> <node> ...]"
+    class GoiardiNodeStatus < Chef::Knife
+      banner "knife goiardi node status [<node> <node> ...]"
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
@@ -32,16 +32,16 @@ class Chef
 
       def get_node_statuses(name_args=[])
         if name_args.length == 0
-          rest.get_rest("pushy/node_states")
+          rest.get_rest("shovey/node_states")
         else
           results = []
           name_args.each do |arg|
             if arg.index(':')
               search(:node, arg).each do |node|
-                results << rest.get_rest("pushy/node_states/#{node.node_name}")
+                results << rest.get_rest("shovey/node_states/#{node.node_name}")
               end
             else
-              results << rest.get_rest("pushy/node_states/#{arg}")
+              results << rest.get_rest("shovey/node_states/#{arg}")
             end
           end
           results
