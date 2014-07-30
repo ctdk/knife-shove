@@ -24,7 +24,7 @@ class Chef
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
         get_node_statuses(name_args).each do |node_status|
-          puts "#{node_status['node_name']}\t#{node_status['availability']}"
+          puts "#{node_status['node_name']}\t#{node_status['status']}"
         end
       end
 
@@ -32,16 +32,16 @@ class Chef
 
       def get_node_statuses(name_args=[])
         if name_args.length == 0
-          rest.get_rest("shovey/node_states")
+          rest.get_rest("status/all/nodes")
         else
           results = []
           name_args.each do |arg|
             if arg.index(':')
               search(:node, arg).each do |node|
-                results << rest.get_rest("shovey/node_states/#{node.node_name}")
+                results << rest.get_rest("status/node/#{node.node_name}/latest")
               end
             else
-              results << rest.get_rest("shovey/node_states/#{arg}")
+              results << rest.get_rest("status/node/#{arg}/latest")
             end
           end
           results
