@@ -84,7 +84,7 @@ class Chef
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
         result = rest.post_rest('shovey/jobs', job_json)
         job_uri = result['uri']
-        puts "Started.  Job ID: #{job_uri[-32,32]}"
+        puts "Started.  Job ID: #{job_uri[-36,36]}"
         previous_state = "Initialized."
         begin
           sleep(0.1)
