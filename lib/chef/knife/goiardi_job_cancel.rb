@@ -38,13 +38,13 @@ class Chef
 	@node_names = name_args[1, name_args.length - 1]
 	rest = Chef::REST.new(Chef::Config[:chef_server_url])
 	cancel_json = {
-	  'run_id' = job_id
+	  'run_id' => job_id,
 	  'nodes' => @node_names
 	}
 	if config[:kill_timeout]
 	  cancel_json['kill_timeout'] = config[:kill_timeout]
 	end
-	result = rest.post_rest('shovey/jobs/cancel', cancel_json)
+	result = rest.put_rest('shovey/jobs/cancel', cancel_json)
 	# wait to figure out what to do with the reply until I've confirmed that
 	# it works on the goiardi end
 	puts "result from cancel: #{result}"
