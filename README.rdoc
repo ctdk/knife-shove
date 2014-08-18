@@ -1,8 +1,8 @@
-= Knife Push
+= Knife Shove
 
 = DESCRIPTION:
 
-The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
+The knife shove plugin is used by the Chef workstation to interact with the Goiardi Shovey API to start jobs, cancel jobs, view job status, view job lists, and view node status. It takes inspiration from Chef Push, and the knife plugin was originally forked from knife-push, but the implementation is quite different.
 
 = INSTALLATION:
 
@@ -12,25 +12,25 @@ To build and install the plugin, run:
 
 = CONFIGURATION:
 
-If push server is running on the same host as the OPC, then no reconfiguration is required on the Chef workstation.
+No reconfiguration is required on the Chef workstation.
 
 = SUBCOMMANDS:
 
-This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag.
+This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag. All commands are in the "goairdi" namespace.
 
 == job list
 
-The <tt>job list</tt> subcommand is used to view a list of Push jobs.
+The <tt>job list</tt> subcommand is used to view a list of Shovey jobs.
 
 == Syntax
-  $ knife job list
+  $ knife goiardi job list
 
 == job start
 
-The <tt>job start</tt> subcommand is used to start a Push job.
+The <tt>job start</tt> subcommand is used to start a Shovey job.
 
 == Syntax
-  $ knife job start (options) COMMAND [NODE, NODE, ...]
+  $ knife goiardi job start (options) COMMAND [NODE, NODE, ...]
 
 == Options
 This argument has the following options:
@@ -47,41 +47,72 @@ percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default valu
 == Examples
 For example, to search for nodes assigned the role “webapp”, and where 90% of those nodes must be available, enter:
 
-  $ knife job start -quorum 90% 'chef-client' --search 'role:webapp'
+  $ knife goiardi job start -quorum 90% 'chef-client' --search 'role:webapp'
 
 To search for a specific set of nodes (named chico, harpo, groucho, gummo, zeppo), and where 90% of those nodes must be available, enter:
 
-  $ knife job start --quorum 90% 'chef-client' chico harpo groucho gummo zeppo
+  $ knife goiardi job start --quorum 90% 'chef-client' chico harpo groucho gummo zeppo
 
-Use the <tt>knife job start</tt> subcommand to run a job with the following syntax:
+Use the <tt>knife goirdi job start</tt> subcommand to run a job with the following syntax:
 
-  $ knife job start job_name node_name
+  $ knife goiardi job start job_name node_name
 
 For example, to run a job named add-glasses against a node named “ricardosalazar”, enter the following:
 
-  $ knife job start add-glasses 'ricardosalazar'
+  $ knife goiardi job start add-glasses 'ricardosalazar'
 
 == job status
 
-The <tt>job status</tt> argument is used to view the status of Push jobs.
+The <tt>job status</tt> argument is used to view the status of Shovey jobs.
 
 == Syntax
-  $ knife job status
+  $ knife goiardi job status
 
 == Examples
 For example, to view the status of a job that has the identifier of “235”, enter:
 
-  $ knife job status 235
+  $ knife goiardi job status 235
+
+== job cancel
+
+The <tt>job cancel</tt> argument is used to cancel a Shovey job, optionally on only the given nodes.
+
+== Syntax
+  $ knife goiardi job cancel <job id> [node, node, ...]
+
+== Examples
+For example, to cancel a job that has the identifier of “235” on node "foo.local", enter:
+
+  $ knife goiardi job cancel 235 foo.local
 
 == node status
 
-The <tt>node status</tt> argument is used to identify nodes that Push may interact with.
+The <tt>node status</tt> argument is used to identify nodes that Shovey may interact with.
 
 == Syntax
-  $ knife node status
+  $ knife goiardi node status
 
 
 == License
+
+Shovey - The push jobs component for goiardi
+
+**Copyright:** Copyright (c) 2014 Jeremy Bingham
+**License:** Apache License, Version 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+This plugin is forked from, and includes code from Chef Pushy:
 
 Push - The push jobs component for chef
 
