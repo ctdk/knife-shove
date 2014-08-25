@@ -85,6 +85,13 @@ For example, to cancel a job that has the identifier of “235” on node "foo.l
 
   $ knife goiardi job cancel 235 foo.local
 
+== job info
+
+The <tt>job info</tt> argument is used to view detailed information about a node's shovey run.
+
+== Syntax
+  $ knife goiardi job info <job id> <node>
+
 == node status
 
 The <tt>node status</tt> argument is used to identify nodes that Shovey may interact with.
