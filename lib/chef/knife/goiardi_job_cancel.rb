@@ -47,7 +47,13 @@ class Chef
 	result = rest.put_rest('shovey/jobs/cancel', cancel_json)
 	# wait to figure out what to do with the reply until I've confirmed that
 	# it works on the goiardi end
-	puts "result from cancel: #{result}"
+	cancel_output = {
+	  "command" => result["command"],
+	  "id" => result["id"],
+	  "status" => result["status"],
+	  "cancelled nodes" => result["nodes"]["cancelled"]
+	}
+	output(cancel_output)
       end
 
     end
