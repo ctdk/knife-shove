@@ -96,6 +96,15 @@ The <tt>job info</tt> argument is used to view detailed information about a node
 == Syntax
   $ knife goiardi job info <job id> <node>
 
+== job stream
+
+The <tt>job stream</tt> argument can be used to stream the output of a shovey job running on a remote node to the managing workstation. Standard output will be normal colored, while standard out is normally printed in red. 
+
+Standard out and error are read, stored, and sent on the shovey node separately in 1024 byte chunks, and are displayed by knife as they are received. Thus, standard out and error output displayed by this command will probably not be woven together the same way they would if you were running the command locally.
+
+== Syntax
+  $ knife goiardi job stream <job id> <node>
+
 == node status
 
 The <tt>node status</tt> argument is used to identify nodes that Shovey may interact with.
