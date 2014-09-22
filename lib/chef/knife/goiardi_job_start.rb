@@ -92,7 +92,6 @@ class Chef
         result = rest.post_rest('shovey/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-36,36]}"
-	puts "nowait? #{config[:nowait]}"
 	exit(0) if config[:nowait]
         previous_state = "Initialized."
         begin
@@ -148,7 +147,7 @@ class Chef
       end
 
       def status_code(job)
-        if job['status'] == "complete" && job["nodes"].keys.all? do |key|
+        if job['status'] == "completed" && job["nodes"].keys.all? do |key|
             key == "succeeded" || key == "nacked" || key == "unavailable"
           end
           0
