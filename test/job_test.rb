@@ -22,6 +22,8 @@
 #
 #####
 
+require 'chef/rest'
+
 def run_list_command
   cmd = "knife goiardi job list -c test/support/knife.rb"
   puts `#{cmd}`
@@ -32,6 +34,10 @@ def run_start_command(jcmd, args="")
   cmd = "knife goiardi job start #{jcmd} #{args} -c test/support/knife.rb"
   puts `#{cmd}`
   raise "ERROR: #{cmd} failed" unless $? == 0
+end
+
+def make_rest
+  return Chef::REST.new("http://localhost:4646", "admin", "/tmp/schob-goiardi/admin.pem")
 end
 
 describe "job list" do
@@ -48,4 +54,59 @@ describe "job start" do
   it "starts a job and returns" do
     run_start_command("ls", "foobar.local -b")
   end
+  it "returns a job id" do
+    rest = make_rest
+    job_json = {
+      'command' => "ls",
+      'nodes' => [ "foobar.local" ],
+      'quorum' => "100%"
+    }
+    result = rest.post_rest('shovey/jobs', job_json)
+    raise "ERROR: no id returned" if result["id"].nil?
+  end
+  it "gets status on a job" do
+    rest = make_rest
+    job_json = {
+      'command' => "ls",
+      'nodes' => [ "foobar.local" ],
+      'quorum' => "100%"
+    }
+    result = rest.post_rest('shovey/jobs', job_json)
+    `knife goiardi job status #{result["id"]} -c test/support/knife.rb`
+    raise "ERROR: failed to get status on job" unless $? == 0
+  end
+  it "gets info on a job" do
+    rest = make_rest
+    job_json = {
+      'command' => "ls",
+      'nodes' => [ "foobar.local" ],
+      'quorum' => "100%"
+    }
+    result = rest.post_rest('shovey/jobs', job_json)
+    `knife goiardi job info #{result["id"]} foobar.local -c test/support/knife.rb`
+    raise "ERROR: failed to get status on job" unless $? == 0
+  end
+  it "streams a job" do
+    rest = make_rest
+    job_json = {
+      'command' => "ls",
+      'nodes' => [ "foobar.local" ],
+      'quorum' => "100%"
+    }
+    result = rest.post_rest('shovey/jobs', job_json)
+    `knife goiardi job stream #{result["id"]} foobar.local -c test/support/knife.rb`
+    raise "ERROR: failed to stream output on job" unless $? == 0
+  end
+  it "cancels a job" do
+    rest = make_rest
+    job_json = {
+      'command' => "sleepy",
+      'nodes' => [ "foobar.local" ],
+      'quorum' => "100%"
+    }
+    result = rest.post_rest('shovey/jobs', job_json)
+    `knife goiardi job cancel #{result["id"]} foobar.local -c test/support/knife.rb`
+    raise "ERROR: failed to cancel job" unless $? == 0
+  end
+  
 end
