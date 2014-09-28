@@ -10,6 +10,8 @@ To build and install the plugin, run:
 
     rake install
 
+Or install from rubygems with `gem install knife-shove`.
+
 = CONFIGURATION:
 
 No reconfiguration is required on the Chef workstation.
