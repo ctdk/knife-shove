@@ -20,25 +20,25 @@ class Chef
   class Knife
     class GoiardiJobInfo < Chef::Knife
       deps do
-	require 'chef/rest'
+        require 'chef/rest'
       end
       banner "knife goiardi job info <job id> <node>"
 
       def run
-	job_id = @name_args[0]
-	if job_id.nil?
-	  ui.error "No job id specified"
-	  show_usage
-	  exit 1
-	end
-	node = @name_args[1]
-	if node.nil?
-	  ui.error "No node specified"
-	  show_usage
-	  exit 1
-	end
-	info = rest.get_rest("shovey/jobs/#{job_id}/#{node}")
-	output(info)
+        job_id = @name_args[0]
+        if job_id.nil?
+          ui.error "No job id specified"
+          show_usage
+          exit 1
+        end
+        node = @name_args[1]
+        if node.nil?
+          ui.error "No node specified"
+          show_usage
+          exit 1
+        end
+        info = rest.get_rest("shovey/jobs/#{job_id}/#{node}")
+        output(info)
       end
     end
   end

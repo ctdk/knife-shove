@@ -32,23 +32,23 @@ class Chef
         :description => "Maximum time the job will be allowed to run (in seconds)."
 
       option :quorum,
-            :short => '-q QUORUM',
-            :long => '--quorum QUORUM',
-            :default => '100%',
-            :description => 'Shovey job quorum. Percentage (-q 50%) or Count (-q 145).'
+        :short => '-q QUORUM',
+        :long => '--quorum QUORUM',
+        :default => '100%',
+        :description => 'Shovey job quorum. Percentage (-q 50%) or Count (-q 145).'
 
       option :search,
-            :short => '-s QUERY',
-            :long => '--search QUERY',
-            :required => false,
-            :description => 'Solr query for list of job candidates.'
+        :short => '-s QUERY',
+        :long => '--search QUERY',
+        :required => false,
+        :description => 'Solr query for list of job candidates.'
 
       option :nowait,
-	    :long => '--dont-wait',
-	    :short => '-b',
-	    :boolean => true,
-	    :default => false,
-	    :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
+        :long => '--dont-wait',
+        :short => '-b',
+        :boolean => true,
+        :default => false,
+        :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
 
       def run
         @node_names = []
@@ -63,7 +63,7 @@ class Chef
         if config[:search]
           q = Chef::Search::Query.new
           @escaped_query = URI.escape(config[:search],
-                                     Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+                                      Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
           begin
             nodes = q.search(:node, @escaped_query).first
           rescue Net::HTTPServerException => e
@@ -92,7 +92,7 @@ class Chef
         result = rest.post_rest('shovey/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-36,36]}"
-	exit(0) if config[:nowait]
+        exit(0) if config[:nowait]
         previous_state = "Initialized."
         begin
           sleep(0.1)
@@ -139,18 +139,18 @@ class Chef
         num = qmatch[1]
 
         case qmatch[2]
-          when "%" then
-            ((num.to_f/100)*total_nodes).ceil
-          else
-            num.to_i
+        when "%" then
+          ((num.to_f/100)*total_nodes).ceil
+        else
+          num.to_i
         end
       end
 
       def status_code(job)
         if job['status'] == "complete" && job["nodes"].keys.all? do |key|
-            key == "succeeded" || key == "nacked" || key == "unavailable"
-          end
-          0
+          key == "succeeded" || key == "nacked" || key == "unavailable"
+        end
+        0
         else
           1
         end
