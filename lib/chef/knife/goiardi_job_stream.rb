@@ -37,7 +37,6 @@ class Chef
 	  show_usage
 	  exit 1
 	end
-	rest = Chef::REST.new(Chef::Config[:chef_server_url])
 	outseq = 0
 	errseq = 0
 	outdone = false

@@ -37,7 +37,6 @@ class Chef
 	  show_usage
 	  exit 1
 	end
-	rest = Chef::REST.new(Chef::Config[:chef_server_url])
 	info = rest.get_rest("shovey/jobs/#{job_id}/#{node}")
 	output(info)
       end

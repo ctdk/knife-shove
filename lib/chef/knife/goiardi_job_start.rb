@@ -76,12 +76,12 @@ class Chef
           @node_names = name_args[1,name_args.length-1]
         end
 
+        puts @node_names.inspect
+
         if @node_names.empty?
           ui.error "No nodes to run job on. Specify nodes as arguments or use -s to specify a search query."
           exit 1
         end
-
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
         job_json = {
           'command' => job_name,

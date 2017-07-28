@@ -36,7 +36,6 @@ class Chef
 	  exit 1
 	end
 	@node_names = name_args[1, name_args.length - 1]
-	rest = Chef::REST.new(Chef::Config[:chef_server_url])
 	cancel_json = {
 	  'run_id' => job_id,
 	  'nodes' => @node_names

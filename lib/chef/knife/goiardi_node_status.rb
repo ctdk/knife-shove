@@ -21,8 +21,6 @@ class Chef
       banner "knife goiardi node status [<node> <node> ...]"
 
       def run
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
-
         get_node_statuses(name_args).each do |node_status|
           puts "#{node_status['node_name']}\t#{node_status['status']}"
         end
