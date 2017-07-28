@@ -19,9 +19,6 @@
 class Chef
   class Knife
     class GoiardiJobStream < Chef::Knife
-      deps do
-        require 'chef/rest'
-      end
       banner "knife goiardi job stream <job id> <node>"
 
       def run

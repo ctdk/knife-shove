@@ -19,9 +19,6 @@
 class Chef
   class Knife
     class GoiardiJobInfo < Chef::Knife
-      deps do
-        require 'chef/rest'
-      end
       banner "knife goiardi job info <job id> <node>"
 
       def run

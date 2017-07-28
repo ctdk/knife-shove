@@ -19,9 +19,6 @@
 class Chef
   class Knife
     class GoiardiJobCancel < Chef::Knife
-      deps do
-        require 'chef/rest'
-      end
       banner "knife goiardi job cancel <job id> [<node> <node> ...]"
 
       option :kill_timeout,

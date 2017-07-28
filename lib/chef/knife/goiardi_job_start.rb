@@ -20,7 +20,6 @@ class Chef
     class GoiardiJobStart < Chef::Knife
 
       deps do
-        require 'chef/rest'
         require 'chef/node'
         require 'chef/search/query'
       end
@@ -75,8 +74,6 @@ class Chef
         else
           @node_names = name_args[1,name_args.length-1]
         end
-
-        puts @node_names.inspect
 
         if @node_names.empty?
           ui.error "No nodes to run job on. Specify nodes as arguments or use -s to specify a search query."
