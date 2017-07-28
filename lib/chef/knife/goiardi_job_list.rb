@@ -21,8 +21,6 @@ class Chef
       banner "knife goiardi job list"
 
       def run
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
-
         jobs = rest.get_rest("shovey/jobs")
         output(jobs)
       end
